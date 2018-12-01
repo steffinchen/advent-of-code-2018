@@ -1,15 +1,13 @@
 defmodule Aoc2018 do
 
-  def main(day, input) do
+  def main(day) do
     result =
       case day do
-        day -> Aoc2018.day01(input)
+        :a -> Day01.a
+        :b -> Day01.b
         _ -> :error
       end
     IO.inspect result
   end
 
-  def day01(_) do
-    File.read! "input/input_01.txt"
-  end
 end
