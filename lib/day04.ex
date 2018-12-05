@@ -9,11 +9,15 @@ defmodule Day04 do
         |> find_guard_with_highest_total
         |> elem(0)
         |> find_min_most_asleep_at(Map.get(log_entries, :consolidated))
-        # 501 vs 493
+        |> calc_result
     end
 
     def b do
 
+    end
+
+    defp calc_result(%{guard: guard, minute: minute}) do
+        guard * minute
     end
 
     defp find_guard_with_highest_total(all) do
@@ -25,13 +29,25 @@ defmodule Day04 do
     end
 
     defp find_min_most_asleep_at(guard, log_entries) do
-        Enum.reduce(log_entries, %{},
-            fn entry, acc ->
+        minute = Enum.reduce(log_entries, %{},
+            fn entry, minutes ->
                 if entry.guard == guard do
-
+                    count_minutes_asleep(entry, minutes)
                 else
-                    acc
+                    minutes
                 end
+            end)
+       |> Enum.max_by(fn {_, count} -> count end)
+       |> elem(0)
+
+       %{guard: guard, minute: minute}
+    end
+
+    defp count_minutes_asleep(entry, minutes) do
+        Enum.reduce(entry.fell_asleep_at .. entry.woke_up-1,
+            minutes,
+            fn minute, acc ->
+                Map.update(acc, minute, 1, &(&1 + 1))
             end)
     end
 
@@ -43,7 +59,6 @@ defmodule Day04 do
                             &(&1 ++ [%{guard: acc.guard, fell_asleep_at: acc.fell_asleep_at, woke_up: entry.min}]))
             _ -> acc
         end
-
     end
 
     defp parse_input(line, acc) do
