@@ -17,6 +17,9 @@ defmodule Day06 do
 
     defp evaluate_grid(coords, max_x, max_y) do
         grid = Matrix.new(max_x, max_y)
+        # each row
+        # each col
+        # check distance to all known coords
     end
 
     defp find_coord_id(coords, x, y) do

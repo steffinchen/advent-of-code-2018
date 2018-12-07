@@ -8,8 +8,9 @@ defmodule Day05 do
     end
 
     def b do
+        start = IO.inspect(System.monotonic_time(unquote(:milli_seconds)))
         word = get_input()
-        Enum.map(?a..?z, fn(x) -> <<x :: utf8>> end)
+        result = Enum.map(?a..?z, fn(x) -> <<x :: utf8>> end)
         |> Enum.reduce(%{},
             fn letter, acc ->
                 count = remove_all(word, letter)
@@ -20,6 +21,9 @@ defmodule Day05 do
             end)
         |> IO.inspect
         |> Enum.min_by(fn {_, count} -> count end)
+        finish = IO.inspect(System.monotonic_time(unquote(:micro_seconds)))
+        IO.inspect(finish - start)
+        result
     end
 
     defp remove_all(word, letter) do
