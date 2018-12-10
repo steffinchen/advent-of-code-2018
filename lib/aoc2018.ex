@@ -16,6 +16,7 @@ defmodule Aoc2018 do
         :a6 -> Day06.a
         :a7 -> Day07.a
         :b7 -> Day07.b
+        :a10 -> Day10.a
         _ -> :error
       end
     IO.inspect result
